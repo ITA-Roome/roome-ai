@@ -12,15 +12,21 @@ from app.common.exception.handler import (
     general_exception_handler,
 )
 
-app = FastAPI(title="Roome AI")
 
-# 400, 401, 403, 404, 405 등 (FastAPI가 내부적으로 발생시키는 모든 HTTP 예외)
+app = FastAPI(
+    title="Roome AI",
+    version="1.0.0",
+    description="잇타(It's TIME) 8기 2팀 Roome AI 서버의 Swagger 문서입니다.",
+    docs_url="/swagger-ui/index.html",  # Swagger UI 경로
+    redoc_url="/redoc",  # ReDoc 경로
+    openapi_url="/api-docs",  # OpenAPI 스키마 경로
+    debug=False,  # 디버그 모드 설정
+)
+
+
+# 400, 401, 403, 404, 405, 409, 500등 (FastAPI가 내부적으로 발생시키는 모든 HTTP 예외)
 app.add_exception_handler(StarletteHTTPException, general_exception_handler)
-
-# 400 ValidationError (요청 바디/쿼리 검증 실패)
 app.add_exception_handler(RequestValidationError, general_exception_handler)
-
-# 나머지 모든 예외 (500, 런타임 에러, DB 에러 등)
 app.add_exception_handler(GeneralException, general_exception_handler)
 
 
