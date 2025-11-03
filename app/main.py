@@ -3,6 +3,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.db.session import get_db
 from app.common.response import success_response
+from app.core.logging_config import get_logger
 from app.common.status.success_status import SuccessStatus
 from app.common.status.error_status import ErrorStatus
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -12,6 +13,7 @@ from app.common.exception.handler import (
     general_exception_handler,
 )
 
+logger = get_logger(__name__)
 
 app = FastAPI(
     title="Roome AI",
@@ -32,6 +34,7 @@ app.add_exception_handler(GeneralException, general_exception_handler)
 
 @app.get("/")
 def read_root():
+    logger.info("Root endpoint accessed")
     return success_response(
         status=SuccessStatus.SUCCESS_200, data={"message": "Welcome to Roome AI!"}
     )
