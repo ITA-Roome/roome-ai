@@ -1,8 +1,7 @@
-from sqlalchemy import Enum
-from enum import Enum as PyEnum
+from enum import Enum
 
 
-class TagType(str, PyEnum):
+class TagType(str, Enum):
     COLOR = "COLOR"
     MATERIAL = "MATERIAL"
     FEATURE = "FEATURE"

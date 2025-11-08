@@ -1,11 +1,10 @@
-from sqlalchemy import Enum
-from enum import Enum as PyEnum
+from enum import Enum
 
 
-class AgeGroup(str, PyEnum):
-    TEENAGER = "10대"
-    TWENTIES = "20대"
-    THIRTIES = "30대"
-    FORTIES = "40대"
-    FIFTIES = "50대"
-    SIXTIES = "60대"
+class AgeGroup(str, Enum):
+    TEENAGER = "TEENAGER"
+    TWENTIES = "TWENTIES"
+    THIRTIES = "THIRTIES"
+    FORTIES = "FORTIES"
+    FIFTIES = "FIFTIES"
+    SIXTIES = "SIXTIES"

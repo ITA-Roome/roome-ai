@@ -1,13 +1,12 @@
-from sqlalchemy import Column, Integer, Enum, ForeignKey
+from sqlalchemy import Column, Integer, String, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.base_class import BaseEntity
-from enum import Enum
-from app.domain.user.models.user import (
-    AgeGroup,
-    Gender,
-    MoodType,
-    SpaceType,
-)
+from app.domain.user.enums.age_group import AgeGroup
+from app.domain.user.enums.gender import Gender
+from app.domain.user.enums.mood_type import MoodType
+from app.domain.user.enums.space_type import SpaceType
+from app.domain.user.enums.login_type import LoginType
+from app.domain.user.enums.role import Role
 
 
 class UserOnboarding(BaseEntity):
