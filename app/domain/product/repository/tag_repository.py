@@ -9,7 +9,7 @@ class TagRepository(BaseRepository[Tag]):
     def __init__(self):
         super().__init__(Tag)
 
-    def find_by_type(self, db: Session, tag_type: str) -> List[Tag]:
+    def find_by_type(self, db: Session, tag_type: TagType) -> List[Tag]:
         return db.query(Tag).filter(Tag.type == tag_type).all()
 
     def find_by_name(self, db: Session, name: str) -> Optional[Tag]:
