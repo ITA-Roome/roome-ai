@@ -2,7 +2,7 @@ name: roome-ai-server CI CD
 
 on:
     push:
-        branches: ['deploy/#7']
+        branches: ['develop']
 
 env:
     AWS_REGION: ap-northeast-2
