@@ -3,7 +3,7 @@ version: '3.9'
 services:
     app:
         image: ${IMAGE} # .deploy.env에서 주입됨
-        container_name: gat_ai_app
+        container_name: roome-ai-server
         restart: always
         ports:
             - '8000:8000' # FastAPI 포트
