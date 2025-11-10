@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+    app:
+        image: ${IMAGE} # .deploy.env에서 주입됨
+        container_name: roome-ai-server
+        restart: always
+        ports:
+            - '8000:8000' # FastAPI 포트
+        env_file:
+            - .env # GitHub Secrets → .env 로딩

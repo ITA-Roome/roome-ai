@@ -68,14 +68,6 @@ tmp/
 *.tmp
 
 # ---------------------------
-# Docker
-# ---------------------------
-*.dockerfile
-Dockerfile
-docker-compose.yml
-.dockerignore
-
-# ---------------------------
 # Coverage / Reports
 # ---------------------------
 .coverage
