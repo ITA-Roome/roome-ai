@@ -68,7 +68,7 @@ jobs:
                   key: ${{ secrets.EC2_SSH_KEY }}
                   script: |
                       set -e
-                      cd ~/roome_ai
+                      cd ~/roome-ai
 
                       # 1. 배포용 이미지 태그 저장
                       echo "IMAGE=${{ needs.build-and-push.outputs.image_uri }}" > .deploy.env
