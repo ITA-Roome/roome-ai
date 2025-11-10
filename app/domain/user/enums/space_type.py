@@ -1,11 +1,10 @@
-from sqlalchemy import Enum
-from enum import Enum as PyEnum
+from enum import Enum
 
 
-class SpaceType(str, PyEnum):
-    ROOM = "방"
-    ONE_ROOM = "원룸"
-    KITCHEN = "주방"
-    BATHROOM = "화장실"
-    BEDROOM = "침실"
-    ENTRANCE = "현관"
+class SpaceType(str, Enum):
+    ROOM = "ROOM"
+    ONE_ROOM = "ONE_ROOM"
+    KITCHEN = "KITCHEN"
+    BATHROOM = "BATHROOM"
+    BEDROOM = "BEDROOM"
+    ENTRANCE = "ENTRANCE"

@@ -1,7 +1,6 @@
-from sqlalchemy import Enum
-from enum import Enum as PyEnum
+from enum import Enum
 
 
-class Role(str, PyEnum):
-    USER = "일반 사용자"
-    ADMIN = "관리자"
+class Role(str, Enum):
+    USER = "USER"
+    ADMIN = "ADMIN"

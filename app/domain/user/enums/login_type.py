@@ -1,8 +1,7 @@
-from sqlalchemy import Enum
-from enum import Enum as PyEnum
+from enum import Enum
 
 
-class LoginType(str, PyEnum):
+class LoginType(str, Enum):
     EMAIL = "EMAIL"
     GOOGLE = "GOOGLE"
     KAKAO = "KAKAO"
