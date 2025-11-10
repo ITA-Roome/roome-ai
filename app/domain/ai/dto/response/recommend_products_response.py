@@ -9,13 +9,13 @@ class AIRecommendedProduct(BaseModel):
 
     id: int
     name: Optional[str]
-    category: Optional[Category]  # ✅ Enum 그대로 유지 (Request와 호환)
+    category: Optional[Category]
     color: Optional[Color]
     price: Optional[int]
     tags: Optional[List[str]] = Field(default_factory=list)
 
     class Config:
-        from_attributes = True  # ✅ Pydantic v2 방식 (orm_mode 대체)
+        from_attributes = True
 
 
 class AIRecommendResponse(BaseModel):

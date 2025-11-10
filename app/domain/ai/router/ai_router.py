@@ -24,7 +24,7 @@ ai_service = AIService()
     response_model=AIRecommendResponse,
     summary="AI 기반 상품 추천",
     description="""
-    💡 **AI Recommendation Endpoint**
+    **AI Recommendation Endpoint**
 
     사용자 온보딩 정보와 입력된 필터(color, category, price, tag_type)를 바탕으로  
     OpenAI 모델이 가장 어울리는 상품을 50개 이내로 추천합니다.
@@ -37,7 +37,7 @@ ai_service = AIService()
     4. 최종 추천 상품 ID를 반환  
 
     ---
-    ⚙️ **가중치**
+    **가중치**
     - 온보딩 일치율: 0.7  
     - 사용자 입력 조건 일치율: 0.2  
     - 스타일 다양성: 0.1  
@@ -51,7 +51,7 @@ def recommend_products(
     사용자 온보딩 + 입력 조건 기반 상품 추천 API
     """
     try:
-        result = ai_service.recommend_for_user(db, request.user_id, request)
+        result = ai_service.recommend_products_for_user(db, request.user_id, request)
         return result
 
     except ValueError as e:

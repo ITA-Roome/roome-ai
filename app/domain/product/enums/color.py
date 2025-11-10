@@ -22,3 +22,4 @@ class Color(str, Enum):
     GOLD = "GOLD"
     SILVER = "SILVER"
     TRANSPARENT = "TRANSPARENT"
+    MULTICOLOR = "MULTICOLOR"

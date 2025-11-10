@@ -17,7 +17,7 @@ class AIService:
         self.user_service = UserService()
         self.product_service = ProductService()
 
-    def recommend_for_user(
+    def recommend_products_for_user(
         self, db: Session, user_id: int, filters: RecommendProductsRequest
     ) -> AIRecommendResponse:
         """
@@ -25,12 +25,12 @@ class AIService:
         프롬프트 기반 추천 시스템 (가격 ±20% 허용)
         """
 
-        # 1️⃣ 온보딩 조회
+        # 온보딩 조회
         user_data = self.user_service.get_user_onboarding(db, user_id)
         if not user_data:
             raise ValueError("User onboarding not found")
 
-        # 2️⃣ 상품 후보 조회
+        # 상품 후보 조회
         candidates = self.product_service.get_products_search_with_or_conditions(
             db, filters
         )
@@ -41,7 +41,7 @@ class AIService:
                 ai_comment="입력 조건에 맞는 상품이 없습니다.",
             )
 
-        # 3️⃣ 상품 정보 준비 (GPT 프롬프트용)
+        # 상품 정보 준비 (GPT 프롬프트용)
         product_info = [
             {
                 "id": p.id,
@@ -54,7 +54,7 @@ class AIService:
             for p in candidates[:80]
         ]
 
-        # 4️⃣ 프롬프트 — 점수 계산식 + 가격 허용 범위 포함
+        # 프롬프트 — 점수 계산식 + 가격 허용 범위 포함
         prompt = f"""
         너는 고급 인테리어 추천 AI 전문가야.
         아래의 사용자 프로필과 상품 리스트를 기반으로 사용자가 가장 선호할 상품 50개를 선정해.
@@ -81,7 +81,7 @@ class AIService:
 
         ---
 
-        ### 🧮 평가 기준 (0~1 점수)
+        ### 평가 기준 (0~1 점수)
         각 상품은 다음 항목을 기준으로 평가된다.
 
         #### 1. 온보딩 일치율 (0.7)
@@ -101,12 +101,12 @@ class AIService:
         - 비슷한 Category, Color 조합이 많을수록 감점
         - Category, Color가 고르게 분포되면 가점
 
-        #### ✅ 총점 계산식
+        #### 총점 계산식
         총점 = (온보딩 일치율 × 0.7) + (입력조건 일치율 × 0.2) + (다양성 × 0.1)
 
         ---
 
-        ### 🔎 출력 형식
+        ### 출력 형식
         - 총점을 기준으로 내림차순 정렬
         - 상위 50개의 상품 id만 JSON으로 출력
         - reasoning, 설명, 텍스트 금지
@@ -118,23 +118,23 @@ class AIService:
         }}
         """
 
-        # 5️⃣ GPT 호출
+        # GPT 호출
         ai_output = generate_text(
             prompt,
             model="gpt-4o-mini",
             system_prompt="You are a JSON generator. Return valid JSON only.",
         )
 
-        # 6️⃣ 응답 파싱
+        # 응답 파싱
         try:
             parsed = json.loads(ai_output)
             recommended_ids = parsed.get("recommended", [])
         except Exception as e:
-            print("⚠️ AI parsing error:", e)
-            print("🧩 Raw output:", ai_output[:300])
+            print("AI parsing error:", e)
+            print("Raw output:", ai_output[:300])
             recommended_ids = [p.id for p in candidates[:10]]
 
-        # 7️⃣ 매칭 및 DTO 변환
+        # 매칭 및 DTO 변환
         matched_products = [p for p in candidates if p.id in recommended_ids]
         product_dtos = [
             AIRecommendedProduct(
@@ -148,7 +148,7 @@ class AIService:
             for p in matched_products
         ]
 
-        # 8️⃣ 최종 반환
+        # 최종 반환
         return AIRecommendResponse(
             user_description=f"{user_data.mood_type}한 {user_data.space_type} 취향의 사용자",
             recommended_products=product_dtos,
